@@ -22,7 +22,7 @@ app.set("trust proxy", 1);
 app.use(
   rateLimiter({
     windowMs: 15 * 60 * 1000, // 15 min
-    // max: 100,  limit each IP to 100 request per windowMS
+    max: 100, //limit each IP to 100 request per windowMS
   })
 );
 app.use(express.json());
