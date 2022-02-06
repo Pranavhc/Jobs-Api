@@ -1,0 +1,232 @@
+openapi: 3.0.0
+info:
+  title: JOBS-API (tutorial)
+  contact: {}
+  version: "1.0"
+servers:
+  - url: https://jobs-api-06-tutorial.herokuapp.com/api/v1
+    variables: {}
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: "LOGIN USER"
+      operationId: PRODUCTION:LOGIN
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PRODUCTIONLOGINREQUEST"
+            example:
+              email: anna@gmail.com
+              password: password
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: "REGISTER USER"
+      operationId: PRODUCTION:REGISTER
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PRODUCTIONREGISTERREQUEST"
+            example:
+              name: Ram
+              email: Ram@gmail.com
+              password: password
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /jobs:
+    post:
+      tags:
+        - Jobs
+      summary: "CREATE JOB"
+      operationId: PRODUCTION:CREATEJOB
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PRODUCTIONCREATEJOBREQUEST"
+            example:
+              company: Random company
+              position: Backend developer
+              status: interview
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    get:
+      tags:
+        - Jobs
+      summary: "GET ALL JOBS"
+      operationId: PRODUCTION:GETALLJOBS
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /jobs/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The job ID
+    get:
+      tags:
+        - Jobs
+      summary: "GET SINGLE JOB"
+      operationId: PRODUCTION:GETSINGLEJOB
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    patch:
+      tags:
+        - Jobs
+      summary: "UPDATE JOB"
+      operationId: PRODUCTION:UPDATEJOB
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PRODUCTIONUPDATEJOBREQUEST"
+            example:
+              company: Google Cloud
+              position: Backend developer
+              status: interview
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    delete:
+      tags:
+        - Jobs
+      summary: "DELETE JOB"
+      operationId: PRODUCTION:DELETEJOB
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    PRODUCTIONLOGINREQUEST:
+      title: PRODUCTIONLOGINREQUEST
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: anna@gmail.com
+        password: password
+    PRODUCTIONREGISTERREQUEST:
+      title: PRODUCTIONREGISTERREQUEST
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: Ram
+        email: Ram@gmail.com
+        password: password
+    PRODUCTIONCREATEJOBREQUEST:
+      title: PRODUCTIONCREATEJOBREQUEST
+      required:
+        - company
+        - position
+        - status
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+        status:
+          type: string
+      example:
+        company: Random company
+        position: Backend developer
+        status: interview
+    PRODUCTIONUPDATEJOBREQUEST:
+      title: PRODUCTIONUPDATEJOBREQUEST
+      required:
+        - company
+        - position
+        - status
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+        status:
+          type: string
+      example:
+        company: Google Cloud
+        position: Backend developer
+        status: interview
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Auth
+    description: ""
+  - name: Jobs
+    description: ""

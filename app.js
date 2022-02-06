@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("express-async-errors");
+
 // express
 const express = require("express");
 const app = express();
@@ -17,20 +18,20 @@ const helmet = require("helmet");
 const cors = require("cors");
 const xss = require("xss-clean");
 const rateLimiter = require("express-rate-limit");
+// Swagger
+const SwaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load("./swagger.yaml");
 
 app.set("trust proxy", 1);
-app.use(
-  rateLimiter({
-    windowMs: 15 * 60 * 1000, // 15 min
-    max: 100, //limit each IP to 100 request per windowMS
-  })
-);
+app.use(rateLimiter({ windowMs: 15 * 60 * 1000, max: 100 }));
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
 app.use(xss());
 
-app.get("/", (req, res) => res.send("Jobs Api"));
+app.get("/", (req, res) => res.send('<h1>Jobs API</h1><a href="/api-docs">API Documentation</a>'));
+app.get("/api-docs", SwaggerUI.serve, SwaggerUI.setup(swaggerDocument));
 // routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticateUser, jobsRouter);
