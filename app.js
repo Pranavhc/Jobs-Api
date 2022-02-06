@@ -1,6 +1,7 @@
+// ----------------IMPORTS----------------------
+// env, errors
 require("dotenv").config();
 require("express-async-errors");
-
 // express
 const express = require("express");
 const app = express();
@@ -18,13 +19,13 @@ const helmet = require("helmet");
 const cors = require("cors");
 const xss = require("xss-clean");
 const rateLimiter = require("express-rate-limit");
-// Swagger
+// Swagger Documentation for API
 const SwaggerUI = require("swagger-ui-express");
 const YAML = require("yamljs");
 const loadSwaggerUI = YAML.load("./swagger.yaml");
 
 app.set("trust proxy", 1);
-app.use(rateLimiter({ windowMs: 15 * 60 * 1000, max: 100 }));
+app.use(rateLimiter({ windowMs: 15 * 60 * 1000, max: 100 })); // 100 requests per 15 min.
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
@@ -50,5 +51,4 @@ const start = async () => {
     console.log(error);
   }
 };
-
 start();
